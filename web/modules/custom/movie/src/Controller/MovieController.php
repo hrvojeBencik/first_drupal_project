@@ -12,8 +12,8 @@ class MovieController extends  ControllerBase {
 
     return [
       '#theme' => 'movie_theme_hook',
-      '#customTitle' => $myTitle,
-      '#customDesc' => $myDescription,
+      '#movieTitle' => $myTitle,
+      '#movieDesc' => $myDescription,
     ];
 
   }
