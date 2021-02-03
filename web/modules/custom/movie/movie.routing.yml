@@ -1,8 +1,18 @@
 movie.content:
   path: '/movie'
   defaults:
-    _controller: '\Drupal\movie\Controller\MovieController::content'
+    _controller: '\Drupal\movie\Controller\MovieController::movie_content'
     _title: 'Movie'
+
+  requirements:
+    _permission: 'access content'
+
+
+movie-reservation.content:
+  path: '/movie-reservation'
+  defaults:
+    _controller: '\Drupal\movie\Controller\MovieController::movie_reservation_content'
+    _title: 'Movie Reservation'
 
   requirements:
     _permission: 'access content'
