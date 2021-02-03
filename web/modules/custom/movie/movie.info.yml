@@ -1,0 +1,11 @@
+name: Movie Module
+description: Creates a page showing movies.
+package: Custom
+
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9
+
+php: 5.6
+
+dependencies:
