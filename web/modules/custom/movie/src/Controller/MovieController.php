@@ -5,7 +5,7 @@ namespace Drupal\movie\Controller;
 use Drupal\Core\Controller\ControllerBase;
 
 class MovieController extends  ControllerBase {
-  public function content() {
+  public function movie_content() {
 
     $node = \Drupal::entityTypeManager()->getStorage('node');
     $nids = $node->getQuery()->condition('status', 1)->condition('type', 'Movie')->execute();
@@ -15,7 +15,12 @@ class MovieController extends  ControllerBase {
       '#theme' => 'movie_theme_hook',
       '#movies' => $movies,
     ];
+  }
 
+  public function movie_reservation_content() {
+    return [
+      '#theme' => 'movie_reservation_theme_hook',
+    ];
   }
 
 }
