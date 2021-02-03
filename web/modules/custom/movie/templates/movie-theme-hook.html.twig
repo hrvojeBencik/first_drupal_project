@@ -1,5 +1,13 @@
 
 
-<h1>Movie Twig template</h1>
-<p>You passed this title: <b>{{ movieTitle }}</b></p>
-<p>You passed this description: <b>{{ movieDesc }}</b></p>
+<h1 style="margin-bottom: 20px" >List of movies</h1>
+
+{% for movie in movies %}
+  <div style="margin-bottom: 40px">
+    <img src={{ file_url(movie.field_image.entity.uri.value) }} alt="{{ movie.field_image.alt }}" width={{ movie.field_image.width}} height={{ movie.field_image.height}}>
+    <h3>{{ movie.label }}</h3>
+    <p>{{ movie.field_description.value | raw}}</p>
+  </div>
+{% endfor %}
+
+

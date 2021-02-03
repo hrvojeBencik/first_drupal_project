@@ -5,8 +5,7 @@ function movie_theme($existing, $type, $theme, $path) {
     'movie_theme_hook' => [
       'render element' => 'children',
       'variables' => [
-        'movieTitle' => 'Default title',
-        'movieDesc' => 'Default description',
+        'movies' => 'List of movies',
       ],
     ],
   ];
