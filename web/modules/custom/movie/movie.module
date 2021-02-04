@@ -10,6 +10,9 @@ function movie_theme($existing, $type, $theme, $path) {
     ],
     'movie_reservation_theme_hook' => [
       'render element' => 'children',
+      'variables' => [
+        'genres' => 'List of genres',
+      ],
     ],
   ];
 }
