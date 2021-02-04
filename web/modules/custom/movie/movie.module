@@ -5,7 +5,7 @@ function movie_theme($existing, $type, $theme, $path) {
     'movie_theme_hook' => [
       'render element' => 'children',
       'variables' => [
-        'movies' => 'List of movies',
+        'movie' => 'Selected movie',
       ],
     ],
     'movie_reservation_theme_hook' => [
@@ -17,4 +17,14 @@ function movie_theme($existing, $type, $theme, $path) {
       ],
     ],
   ];
+}
+
+function movie_preprocess_node__page(array &$variables) : void {
+  $variables['#attached']['library'][] = 'movie/movie';
+}
+
+function movie_preprocess_views_view_fields(&$variables) {
+
+  // Retrieve an array which contains the path parameters.
+  $variables['params']['parameter_name'] = $_GET['parameter_name'];
 }

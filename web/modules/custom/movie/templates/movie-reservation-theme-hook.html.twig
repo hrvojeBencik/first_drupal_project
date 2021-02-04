@@ -48,11 +48,18 @@
         <div class="movie">
           <img src={{ file_url(movie.field_image.entity.uri.value) }} alt="{{ movie.field_image.alt }}" width="160px" height="200px">
           <h3>{{ movie.label }}</h3>
-          <button class="reserveBtn">Reserve movie</button>
+          <button class="reserveBtn use-ajax"
+                  data-dialog-options="{&quot;width&quot;:400}"
+                  data-dialog-type="modal"
+                  href="/movie?id={{ movie.id }}">
+            Reserve movie
+          </button>
+
         </div>
       {% endif %}
     {% endfor %}
   {% endfor %}
+
 </body>
 </html>
 
