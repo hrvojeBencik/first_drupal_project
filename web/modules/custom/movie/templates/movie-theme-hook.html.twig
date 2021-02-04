@@ -7,6 +7,12 @@
     <img src={{ file_url(movie.field_image.entity.uri.value) }} alt="{{ movie.field_image.alt }}" width={{ movie.field_image.width}} height={{ movie.field_image.height}}>
     <h3>{{ movie.label }}</h3>
     <p>{{ movie.field_description.value | raw}}</p>
+    <h4>Available to watch on: </h4>
+    <ul>
+      {% for day in movie.field_available_on %}
+        <li>{{ day.entity.name.value }}</li>
+      {% endfor %}
+    </ul>
   </div>
 {% endfor %}
 
