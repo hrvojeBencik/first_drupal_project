@@ -1,10 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    .reserveBtn {
+      display: none;
+      margin-left: 100px;
+    }
+
+    .movie {
+      margin-bottom: 20px;
+    }
+
+    .movie:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .movie:hover .reserveBtn {
+      display: inline-block;
+    }
+
+    .movie >h3{
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to our movie reservation page</h1>
+
+  <form action="/movie-reservation" method="post">
+
+    <label for="genres">Please select movie genre for which you would like to make a reservation:</label>
+    <select name="genres" id="genres" onchange="this.form.submit()">
+      {% for genre in genres %}
+        <option value="{{ genre['name'] }}" {% if selectedGenre == genre['name']%} selected="selected" {% endif%} >{{ genre['name'] }}</option>
+      {% endfor %}
+    </select>
+  </form>
 
 
-<h1>Welcome to our movie reservation page</h1>
-
-<label for="genres">Please select movie genre for which you would like to make a reservation:</label>
-<select name="genres" id="genres">
-  {% for genre in genres %}
-    <option value="{{ genre['name'] }}">{{ genre['name'] }}</option>
+  {% for movie in movies %}
+    {% for genre in movie.field_genre %}
+      {% if genre.entity.name.value == selectedGenre %}
+        <div class="movie">
+          <img src={{ file_url(movie.field_image.entity.uri.value) }} alt="{{ movie.field_image.alt }}" width="160px" height="200px">
+          <h3>{{ movie.label }}</h3>
+          <button class="reserveBtn">Reserve movie</button>
+        </div>
+      {% endif %}
+    {% endfor %}
   {% endfor %}
-</select>
+</body>
+</html>
+
+
+
+
+

@@ -20,7 +20,7 @@ global-components:
       css/base.css: {}
       css/custom-style.css: {}
       css/custom-media.css: {}
-  js:  
+  js:
     js/jquery.smartmenus.min.js: {}
     js/custom.js: {}
   dependencies:
