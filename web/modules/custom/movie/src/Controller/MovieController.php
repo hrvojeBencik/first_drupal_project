@@ -18,8 +18,20 @@ class MovieController extends  ControllerBase {
   }
 
   public function movie_reservation_content() {
+    $vocabulary = 'Genres';
+    $node = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    $terms = $node->loadTree($vocabulary);
+
+    foreach ($terms as $term) {
+      $genres_data[] = array(
+        'id' => $term->tid,
+        'name' => $term->name,
+      );
+    }
+
     return [
       '#theme' => 'movie_reservation_theme_hook',
+      '#genres' => $genres_data,
     ];
   }
 

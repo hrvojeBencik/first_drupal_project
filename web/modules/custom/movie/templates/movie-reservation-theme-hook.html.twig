@@ -1,3 +1,10 @@
 
 
 <h1>Welcome to our movie reservation page</h1>
+
+<label for="genres">Please select movie genre for which you would like to make a reservation:</label>
+<select name="genres" id="genres">
+  {% for genre in genres %}
+    <option value="{{ genre['name'] }}">{{ genre['name'] }}</option>
+  {% endfor %}
+</select>
