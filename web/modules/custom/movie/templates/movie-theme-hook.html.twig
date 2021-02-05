@@ -8,13 +8,13 @@
     <h3>{{ movie.label }}</h3>
     <p>{{ movie.field_description.value | raw}}</p>
     <h4>Available to watch on: </h4>
-      <select name="days" id="days">
+
+      <select name="day" id="day" >
         {% for day in movie.field_available_on %}
           <option value="{{ day.entity.name.value }}" {% if selectedDay == day.entity.name.value %} selected="selected" {% endif%}>{{ day.entity.name.value }}</option>
         {% endfor %}
       </select>
-
-    <button>Confirm your movie reservation</button>
+      <input type="submit" value="Confirm your movie reservation">
   </div>
 
 

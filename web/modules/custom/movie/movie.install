@@ -1,0 +1,76 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+function movie_schema() : array {
+  $schema['reservations'] = array(
+    'description' => 'This table contains movie reservations in our cinema',
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'size' => 'medium',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ),
+      'day_of_reservation' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'time_of_reservation' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'reserved_movie_genre' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'reserved_movie_name' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+      ),
+      'customer_name' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}
+
+function movie_install() {
+  Database::setActiveConnection();
+  $connection = Database::getConnection()->schema();
+
+  $schema = movie_schema();
+
+
+  foreach ($schema as $name => $table) {
+    try {
+      $connection->createTable($name, $table);
+    } catch (SchemaObjectExistsException $e) {
+      \Drupal::logger('movie')->error($e->getMessage());
+    }
+  }
+
+  Database::setActiveConnection();
+}
+
+function movie_uninstall() {
+  Database::setActiveConnection();
+  $connection = Database::getConnection();
+
+  $schema = movie_schema();
+
+  foreach ($schema as $name => $table) {
+    $connection->schema()->dropTable($name);
+  }
+
+  Database::setActiveConnection();
+}
