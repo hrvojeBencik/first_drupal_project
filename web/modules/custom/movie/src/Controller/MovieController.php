@@ -39,7 +39,6 @@ class MovieController extends  ControllerBase {
   }
 
   public function movie_reservation_content() {
-
     $vocabulary = 'Genres';
     $taxonomy = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
     $terms = $taxonomy->loadTree($vocabulary);
@@ -61,4 +60,5 @@ class MovieController extends  ControllerBase {
       '#selectedGenre' => $selectedGenre,
     ];
   }
+
 }

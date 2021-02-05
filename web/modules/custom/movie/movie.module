@@ -24,7 +24,5 @@ function movie_preprocess_node__page(array &$variables) : void {
 }
 
 function movie_preprocess_views_view_fields(&$variables) {
-
-  // Retrieve an array which contains the path parameters.
   $variables['params']['parameter_name'] = $_GET['parameter_name'];
 }
