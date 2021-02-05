@@ -1,19 +1,21 @@
 
 
-<h1 style="margin-bottom: 20px" >List of movies</h1>
+<h1 style="margin-bottom: 20px" >Selected movie</h1>
 
-{% for movie in movies %}
+
   <div style="margin-bottom: 40px">
     <img src={{ file_url(movie.field_image.entity.uri.value) }} alt="{{ movie.field_image.alt }}" width={{ movie.field_image.width}} height={{ movie.field_image.height}}>
     <h3>{{ movie.label }}</h3>
     <p>{{ movie.field_description.value | raw}}</p>
     <h4>Available to watch on: </h4>
-    <ul>
-      {% for day in movie.field_available_on %}
-        <li>{{ day.entity.name.value }}</li>
-      {% endfor %}
-    </ul>
+      <select name="days" id="days">
+        {% for day in movie.field_available_on %}
+          <option value="{{ day.entity.name.value }}" {% if selectedDay == day.entity.name.value %} selected="selected" {% endif%}>{{ day.entity.name.value }}</option>
+        {% endfor %}
+      </select>
+
+    <button>Confirm your movie reservation</button>
   </div>
-{% endfor %}
+
 
 

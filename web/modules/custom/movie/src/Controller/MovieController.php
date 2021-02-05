@@ -14,13 +14,27 @@ class MovieController extends  ControllerBase {
     return $movies;
   }
 
-  public function movie_content() {
+  public function getMovieById($id) {
+    $node = \Drupal::entityTypeManager()->getStorage('node');
+    $nids = $node->getQuery()->condition('status', 1)->condition('type', 'Movie')->execute();
+    foreach ($nids as $nid) {
+      if($nid == $id) {
+        $selectedId = $nid;
+      }
+    }
+    $movie = $node->load($selectedId);
 
-    $movies = $this->getMovies();
+    return $movie;
+  }
+
+  public function movie_content() {
+    $id = $_GET['id'];
+
+    $movie = $this->getMovieById($id);
 
     return [
       '#theme' => 'movie_theme_hook',
-      '#movies' => $movies,
+      '#movie' => $movie,
     ];
   }
 
