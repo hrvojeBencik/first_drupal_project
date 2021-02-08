@@ -7,10 +7,11 @@
     <img src={{ file_url(movie.field_image.entity.uri.value) }} alt="{{ movie.field_image.alt }}" width={{ movie.field_image.width}} height={{ movie.field_image.height}}>
     <h3>{{ movie.label }}</h3>
     <p>{{ movie.field_description.value | raw}}</p>
+    <p>{{ movie.field_genre.0.entity.name.value }}</p>
     <h4>Available to watch on: </h4>
 
-    <form action="#" method="get">
-      <input name="customerName" type="text" maxlength="10" autocapitalize="words" pattern="/^[a-zA-Z]+$/" placeholder="Enter your name...">
+    <form action="/movie-reservation?movieName={{ movie.label }}&genre={{ movie.field_genre.0.entity.name.value }}" method="post">
+      <input name="customerName" type="text" maxlength="10" autocapitalize="words"  placeholder="Enter your name...">
       <select name="day" id="day" >
         {% for day in movie.field_available_on %}
           <option value="{{ day.entity.name.value }}" {% if selectedDay == day.entity.name.value %} selected="selected" {% endif%}>{{ day.entity.name.value }}</option>
@@ -18,8 +19,6 @@
       </select>
       <input type="submit" value="Confirm your movie reservation">
     </form>
-
-
   </div>
 
 
