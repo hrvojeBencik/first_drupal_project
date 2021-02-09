@@ -31,7 +31,6 @@ class MovieController extends  ControllerBase {
     $id = $_GET['id'];
 
     $movie = $this->getMovieById($id);
-
     return [
       '#theme' => 'movie_theme_hook',
       '#movie' => $movie,
@@ -39,6 +38,8 @@ class MovieController extends  ControllerBase {
   }
 
   public function movie_reservation_content() {
+    $this->insert_reservations_data();
+
     $vocabulary = 'Genres';
     $taxonomy = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
     $terms = $taxonomy->loadTree($vocabulary);
@@ -61,4 +62,33 @@ class MovieController extends  ControllerBase {
     ];
   }
 
+  public function insert_reservations_data() {
+    $jsonMovieData = \Drupal::request()->request->get('movieData');
+
+      if($jsonMovieData) {
+        $movieData = \GuzzleHttp\json_decode($jsonMovieData);
+        $dbConnection = \Drupal::database();
+
+        try {
+          $query = $dbConnection->insert('reservations')->fields(
+            array(
+              'day_of_reservation',
+              'time_of_reservation',
+              'reserved_movie_genre',
+              'reserved_movie_name',
+              'customer_name'
+            ),
+            array(
+              $movieData->day,
+              \Drupal::time()->getRequestTime(),
+              $movieData->genre,
+              $movieData->title,
+              $movieData->customerName
+            )
+          )->execute();
+        } catch (\Exception $e) {
+          \Drupal::logger('confirm-reservation')->error($e->getMessage());
+        }
+    }
+  }
 }

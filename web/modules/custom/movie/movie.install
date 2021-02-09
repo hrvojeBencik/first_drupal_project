@@ -50,7 +50,6 @@ function movie_install() {
 
   $schema = movie_schema();
 
-
   foreach ($schema as $name => $table) {
     try {
       $connection->createTable($name, $table);

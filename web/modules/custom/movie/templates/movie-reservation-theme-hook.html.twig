@@ -41,7 +41,6 @@
     </select>
   </form>
 
-
   {% for movie in movies %}
     {% for genre in movie.field_genre %}
       {% if genre.entity.name.value == selectedGenre %}
@@ -59,11 +58,5 @@
       {% endif %}
     {% endfor %}
   {% endfor %}
-
 </body>
 </html>
-
-
-
-
-
