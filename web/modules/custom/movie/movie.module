@@ -26,5 +26,3 @@ function movie_preprocess_node__page(array &$variables) : void {
 function movie_preprocess_views_view_fields(&$variables) {
   $variables['params']['parameter_name'] = $_GET['parameter_name'];
 }
-
-

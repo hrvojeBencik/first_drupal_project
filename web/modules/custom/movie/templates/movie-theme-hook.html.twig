@@ -1,4 +1,4 @@
-
+{{ attach_library('movie/movie') }}
 
 <h1 style="margin-bottom: 20px" >Selected movie</h1>
 
@@ -10,16 +10,21 @@
     <p>{{ movie.field_genre.0.entity.name.value }}</p>
     <h4>Available to watch on: </h4>
 
-    <form action="/movie-reservation?movieName={{ movie.label }}&genre={{ movie.field_genre.0.entity.name.value }}" method="post">
-      <input name="customerName" type="text" maxlength="10" autocapitalize="words"  placeholder="Enter your name...">
-      <select name="day" id="day" >
+    <form action="/movie-reservation" method="post">
+      <input id="customerName" name="customerName" type="text" maxlength="10" autocapitalize="words" placeholder="Enter your name...">
+      <br>
+      <select name="day" id="day">
         {% for day in movie.field_available_on %}
-          <option value="{{ day.entity.name.value }}" {% if selectedDay == day.entity.name.value %} selected="selected" {% endif%}>{{ day.entity.name.value }}</option>
+          <option value="{{ day.entity.name.value }}">{{ day.entity.name.value }}</option>
         {% endfor %}
       </select>
-      <input type="submit" value="Confirm your movie reservation">
+
+      <input
+        id="submit"
+        type="submit"
+        value="Confirm your movie reservation"
+        data-movie-title="{{ movie.label }}"
+        data-movie-genre="{{ movie.field_genre.0.entity.name.value }}"
+      >
     </form>
   </div>
-
-
-

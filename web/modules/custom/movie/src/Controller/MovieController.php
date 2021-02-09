@@ -63,34 +63,32 @@ class MovieController extends  ControllerBase {
   }
 
   public function insert_reservations_data() {
-    $customerName = \Drupal::request()->request->get('customerName');
-    $day = \Drupal::request()->request->get('day');
-    $movieName = \Drupal::request()->get('movieName');
-    $movieGenre = \Drupal::request()->get('genre');
+    $jsonMovieData = \Drupal::request()->request->get('movieData');
 
-    if($movieGenre != NULL && $movieName != NULL && $customerName != NULL && $day != NULL) {
-      $conn = \Drupal::database();
-    try {
-      $query = $conn->insert('reservations')->fields(
-        array(
-          'day_of_reservation',
-          'time_of_reservation',
-          'reserved_movie_genre',
-          'reserved_movie_name',
-          'customer_name'
-        ),
-        array(
-          $day,
-          \Drupal::time()->getRequestTime(),
-          $movieGenre,
-          $movieName,
-          $customerName
-        )
-      )->execute();
-    } catch (\Exception $e) {
-      \Drupal::logger('confirm-reservation')->error($e->getMessage());
+      if($jsonMovieData) {
+        $movieData = \GuzzleHttp\json_decode(stripslashes($jsonMovieData));
+        $dbConnection = \Drupal::database();
+
+        try {
+          $query = $dbConnection->insert('reservations')->fields(
+            array(
+              'day_of_reservation',
+              'time_of_reservation',
+              'reserved_movie_genre',
+              'reserved_movie_name',
+              'customer_name'
+            ),
+            array(
+              $movieData[2],
+              \Drupal::time()->getRequestTime(),
+              $movieData[1],
+              $movieData[0],
+              $movieData[3]
+            )
+          )->execute();
+        } catch (\Exception $e) {
+          \Drupal::logger('confirm-reservation')->error($e->getMessage());
+        }
     }
   }
-  }
-
 }

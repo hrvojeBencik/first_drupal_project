@@ -1,6 +1,9 @@
 movie:
   version: 1.x
+  js:
+    js/movie-reservation.js: {}
   dependencies:
     - core/jquery
     - core/drupal.dialog.ajax
     - core/jquery.form
+    - core/drupalSettings
