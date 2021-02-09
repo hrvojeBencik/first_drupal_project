@@ -1,16 +1,16 @@
 jQuery(document).ready(function ($) {
-  let submit = $('#submit');
-  let movieTitle = submit.data('movie-title');
-  let movieGenre = submit.data('movie-genre');
+  const submit = $('#submit');
+  const movieTitle = submit.data('movie-title');
+  const movieGenre = submit.data('movie-genre');
 
-  let movieData = [movieTitle, movieGenre];
 
   submit.click(function() {
-    let movieDay = $('#day option:selected').val();
-    let customerName = $('#customerName').val();
-    movieData.push(movieDay, customerName);
+    const movieDay = $('#day option:selected').val();
+    const customerName = $('#customerName').val();
 
-    let jsonMovieData = JSON.stringify(movieData);
+    const movieData = {'title': movieTitle, 'genre': movieGenre, 'day': movieDay, 'customerName': customerName};
+
+    const jsonMovieData = JSON.stringify(movieData);
 
     $.ajax({
       type: "POST",

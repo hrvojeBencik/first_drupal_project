@@ -66,7 +66,7 @@ class MovieController extends  ControllerBase {
     $jsonMovieData = \Drupal::request()->request->get('movieData');
 
       if($jsonMovieData) {
-        $movieData = \GuzzleHttp\json_decode(stripslashes($jsonMovieData));
+        $movieData = \GuzzleHttp\json_decode($jsonMovieData);
         $dbConnection = \Drupal::database();
 
         try {
@@ -79,11 +79,11 @@ class MovieController extends  ControllerBase {
               'customer_name'
             ),
             array(
-              $movieData[2],
+              $movieData->day,
               \Drupal::time()->getRequestTime(),
-              $movieData[1],
-              $movieData[0],
-              $movieData[3]
+              $movieData->genre,
+              $movieData->title,
+              $movieData->customerName
             )
           )->execute();
         } catch (\Exception $e) {
