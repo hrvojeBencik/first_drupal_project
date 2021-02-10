@@ -46,12 +46,24 @@ class MovieController extends  ControllerBase {
     return $disabledDays;
   }
 
-  public function getAllReservations() : array {
+  public function getAllReservations($sort) : array {
     $dbConnection = \Drupal::database();
     $reservations = [];
+    $defaultSort = 'reserved_movie_name';
+    $defaultSortDirection = 'ASC';
+
+    if($sort === 'Z-A') {
+      $defaultSortDirection = 'DESC';
+    } elseif ($sort === 'Newest') {
+      $defaultSort = 'time_of_reservation';
+      $defaultSortDirection = 'DESC';
+    } elseif ($sort === 'Oldest') {
+      $defaultSort = 'time_of_reservation';
+      $defaultSortDirection = 'ASC';
+    }
 
     $query = $dbConnection->select('reservations', 'r');
-    $query->fields('r', ['day_of_reservation', 'time_of_reservation', 'reserved_movie_genre', 'reserved_movie_name', 'customer_name']);
+    $query->fields('r', ['day_of_reservation', 'time_of_reservation', 'reserved_movie_genre', 'reserved_movie_name', 'customer_name'])->orderBy($defaultSort, $defaultSortDirection);
     $reservations = $query->execute()->fetchAll();
 
     return $reservations;
@@ -96,11 +108,13 @@ class MovieController extends  ControllerBase {
   }
 
   public function all_reservations_content() {
-    $reservations = $this->getAllReservations();
+    $sort = \Drupal::request()->request->get('sort') ?? 'A-Z';
+    $reservations = $this->getAllReservations($sort);
 
     return [
       '#theme' => 'all_reservations_theme_hook',
       '#reservations' => $reservations,
+      '#selectedSort' => $sort,
     ];
   }
 
