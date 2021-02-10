@@ -16,14 +16,8 @@
       <br>
       <select name="day" id="day">
         {% for day in movie.field_available_on %}
-          {% if disabledDays is empty %}
+          {% if day.entity.name.value not in disabledDays %}
             <option value="{{ day.entity.name.value }}">{{ day.entity.name.value }}</option>
-          {% else%}
-            {% for disabledDay in disabledDays %}
-              {% if disabledDay != day.entity.name.value  %}
-                <option value="{{ day.entity.name.value }}">{{ day.entity.name.value }}</option>
-              {% endif %}
-            {% endfor%}
           {% endif %}
         {% endfor %}
       </select>
