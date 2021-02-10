@@ -3,6 +3,7 @@
 namespace Drupal\movie\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityInterface;
 
 class MovieController extends  ControllerBase {
 
@@ -27,13 +28,34 @@ class MovieController extends  ControllerBase {
     return $movie;
   }
 
+  public function checkForFullAttendance(EntityInterface $movie) : array {
+    $numberOfDays = $movie->field_number_of_attendants->value;
+    $disabledDays = [];
+    $dbConnection = \Drupal::database();
+    foreach ($movie->field_available_on as $day) {
+      $query = $dbConnection->select('reservations', 'r');
+      $query->condition('day_of_reservation', $day->entity->name->value);
+      $query->fields('r', ['id', 'reserved_movie_name'],);
+      $result =$query->execute()->fetchAll();
+      $num_rows = count($result);
+
+      if ($num_rows >= $numberOfDays) {
+        array_push($disabledDays, $day->entity->name->value);
+      }
+    }
+    return $disabledDays;
+  }
+
   public function movie_content() {
     $id = $_GET['id'];
 
     $movie = $this->getMovieById($id);
+    $disabledDays = $this->checkForFullAttendance($movie);
+
     return [
       '#theme' => 'movie_theme_hook',
       '#movie' => $movie,
+      '#disabledDays' => $disabledDays,
     ];
   }
 

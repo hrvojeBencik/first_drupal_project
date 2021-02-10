@@ -8,6 +8,7 @@
     <h3>{{ movie.label }}</h3>
     <p>{{ movie.field_description.value | raw}}</p>
     <p>{{ movie.field_genre.0.entity.name.value }}</p>
+    <p>Attendants: {{ movie.field_number_of_attendants.0.value }}</p>
     <h4>Available to watch on: </h4>
 
     <form action="/movie-reservation" method="post">
@@ -15,7 +16,9 @@
       <br>
       <select name="day" id="day">
         {% for day in movie.field_available_on %}
-          <option value="{{ day.entity.name.value }}">{{ day.entity.name.value }}</option>
+          {% if day.entity.name.value not in disabledDays %}
+            <option value="{{ day.entity.name.value }}">{{ day.entity.name.value }}</option>
+          {% endif %}
         {% endfor %}
       </select>
 

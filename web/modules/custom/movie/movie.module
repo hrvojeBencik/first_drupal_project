@@ -6,6 +6,7 @@ function movie_theme($existing, $type, $theme, $path) {
       'render element' => 'children',
       'variables' => [
         'movie' => 'Selected movie',
+        'disabledDays' => 'Disabled days'
       ],
     ],
     'movie_reservation_theme_hook' => [
