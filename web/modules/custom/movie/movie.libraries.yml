@@ -2,6 +2,7 @@ movie:
   version: 1.x
   js:
     js/movie-reservation.js: {}
+    js/movie-exporter.js: {}
   dependencies:
     - core/jquery
     - core/drupal.dialog.ajax

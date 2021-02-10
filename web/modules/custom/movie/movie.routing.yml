@@ -7,7 +7,6 @@ movie.content:
   requirements:
     _permission: 'access content'
 
-
 movie-reservation.content:
   path: '/movie-reservation'
   defaults:
@@ -16,3 +15,11 @@ movie-reservation.content:
 
   requirements:
     _permission: 'access content'
+
+movie-exporter.content:
+  path: '/movie-exporter'
+  defaults:
+    _form: '\Drupal\movie\Form\ExportForm'
+    _title: 'Movie Exporter'
+  requirements:
+    _permission: 'administer exporter_form'
