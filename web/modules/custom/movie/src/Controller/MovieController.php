@@ -52,11 +52,7 @@ class MovieController extends  ControllerBase {
 
     $query = $dbConnection->select('reservations', 'r');
     $query->fields('r', ['day_of_reservation', 'time_of_reservation', 'reserved_movie_genre', 'reserved_movie_name', 'customer_name']);
-    $result = $query->execute()->fetchAll();
-
-    foreach($result as $record) {
-      array_push($reservations, $record);
-    }
+    $reservations = $query->execute()->fetchAll();
 
     return $reservations;
   }
