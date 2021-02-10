@@ -1,0 +1,9 @@
+<h2>Available Books</h2>
+
+{% for book in books %}
+  <div style="margin-bottom: 20px">
+    <h4>{{ book.label }}</h4>
+    <p>Price: {{ book.field_price.0.value }}</p>
+    <p>ISBN: {{ book.field_isbn.value }}</p>
+  </div>
+{% endfor %}

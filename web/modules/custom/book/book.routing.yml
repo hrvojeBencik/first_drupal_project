@@ -1,0 +1,8 @@
+book.content:
+  path: '/books'
+  defaults:
+    _controller: '\Drupal\book\Controller\BookController::book_content'
+    _title: 'Books'
+
+  requirements:
+    _permission: 'access content'
