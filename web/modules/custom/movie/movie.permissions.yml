@@ -1,0 +1,4 @@
+administer exporter_from:
+  title: 'Administer exporter form'
+  description: 'Allows the ability to export data'
+  restrict access: true
