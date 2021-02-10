@@ -46,6 +46,21 @@ class MovieController extends  ControllerBase {
     return $disabledDays;
   }
 
+  public function getAllReservations() : array {
+    $dbConnection = \Drupal::database();
+    $reservations = [];
+
+    $query = $dbConnection->select('reservations', 'r');
+    $query->fields('r', ['day_of_reservation', 'time_of_reservation', 'reserved_movie_genre', 'reserved_movie_name', 'customer_name']);
+    $result = $query->execute()->fetchAll();
+
+    foreach($result as $record) {
+      array_push($reservations, $record);
+    }
+
+    return $reservations;
+  }
+
   public function movie_content() {
     $id = $_GET['id'];
 
@@ -81,6 +96,15 @@ class MovieController extends  ControllerBase {
       '#movies' => $movies,
       '#genres' => $genres_data,
       '#selectedGenre' => $selectedGenre,
+    ];
+  }
+
+  public function all_reservations_content() {
+    $reservations = $this->getAllReservations();
+
+    return [
+      '#theme' => 'all_reservations_theme_hook',
+      '#reservations' => $reservations,
     ];
   }
 

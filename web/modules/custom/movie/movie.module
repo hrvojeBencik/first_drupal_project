@@ -17,6 +17,12 @@ function movie_theme($existing, $type, $theme, $path) {
         'selectedGenre' => 'Selected genre'
       ],
     ],
+    'all_reservations_theme_hook' => [
+      'render element' => 'children',
+      'variables' => [
+        'reservations' => 'List of reservations',
+      ],
+    ],
   ];
 }
 
