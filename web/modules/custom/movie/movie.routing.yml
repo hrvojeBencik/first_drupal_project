@@ -16,6 +16,15 @@ movie-reservation.content:
   requirements:
     _permission: 'access content'
 
+all-reservations.content:
+  path: '/all-reservations'
+  defaults:
+    _controller: '\Drupal\movie\Controller\MovieController::all_reservations_content'
+    _title: 'All Reservations'
+
+  requirements:
+    _permission: 'access content'
+
 movie-exporter.content:
   path: '/movie-exporter'
   defaults:

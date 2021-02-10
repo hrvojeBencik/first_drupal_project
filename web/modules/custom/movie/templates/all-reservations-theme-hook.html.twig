@@ -1,0 +1,10 @@
+<h1>All reservations</h1>
+
+{% for reservation in reservations %}
+  <div style="margin-bottom: 20px; padding: 20px; background-color: rgba(0,0,0,0.2)">
+    <h4>{{ reservation.reserved_movie_name }}</h4>
+    <p>{{ reservation.time_of_reservation|date('d/m/Y') }}, {{ reservation.day_of_reservation }}</p>
+    <p>Genre: {{ reservation.reserved_movie_genre }}</p>
+    <p>Customer name: {{ reservation.customer_name }}</p>
+  </div>
+{% endfor %}
