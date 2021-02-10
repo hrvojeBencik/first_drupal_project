@@ -1,4 +1,13 @@
 <h1>All reservations</h1>
+<form action="" method="post">
+  <label for="sort">Sort by: </label>
+  <select name="sort" id="sort" onchange="this.form.submit()" >
+    <option {% if selectedSort == 'A-Z' %} selected {% endif %} value="A-Z">A-Z</option>
+    <option {% if selectedSort == 'Z-A' %} selected {% endif %} value="Z-A">Z-A</option>
+    <option {% if selectedSort == 'Newest' %} selected {% endif %} value="Newest">Newest first</option>
+    <option {% if selectedSort == 'Oldest' %} selected {% endif %} value="Oldest">Oldest first</option>
+  </select>
+</form>
 
 {% for reservation in reservations %}
   <div style="margin-bottom: 20px; padding: 20px; background-color: rgba(0,0,0,0.2)">
