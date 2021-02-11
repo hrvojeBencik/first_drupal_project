@@ -2,7 +2,10 @@
 
 namespace Drupal\movie\Controller;
 
+use Drupal\Core\Condition\ConditionInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Database\Query\Query;
+use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\Core\Entity\EntityInterface;
 
 class MovieController extends  ControllerBase {
@@ -46,6 +49,24 @@ class MovieController extends  ControllerBase {
     return $disabledDays;
   }
 
+  public function checkForUrlParameters(SelectInterface $query) {
+    $getRequest = \Drupal::request();
+    $movieData = [
+      'day_of_reservation' => $getRequest->get('day'),
+      'reserved_movie_genre' =>  $getRequest->get('genre'),
+      'reserved_movie_name' => $getRequest->get('movieTitle'),
+      'customer_name' =>  $getRequest->get('name'),
+    ];
+
+    foreach ($movieData as $key => $value) {
+      if($value) {
+        $query->condition($key, str_replace('+', ' ', $value));
+      }
+    }
+
+    return $query;
+  }
+
   public function getAllReservations($sort) : array {
     $dbConnection = \Drupal::database();
     $reservations = [];
@@ -63,7 +84,9 @@ class MovieController extends  ControllerBase {
     }
 
     $query = $dbConnection->select('reservations', 'r');
-    $query->fields('r', ['day_of_reservation', 'time_of_reservation', 'reserved_movie_genre', 'reserved_movie_name', 'customer_name'])->orderBy($defaultSort, $defaultSortDirection);
+    $query = $this->checkForUrlParameters($query);
+    $query->fields('r', ['day_of_reservation', 'time_of_reservation', 'reserved_movie_genre', 'reserved_movie_name', 'customer_name'])
+          ->orderBy($defaultSort, $defaultSortDirection);
     $reservations = $query->execute()->fetchAll();
 
     return $reservations;
@@ -108,6 +131,7 @@ class MovieController extends  ControllerBase {
   }
 
   public function all_reservations_content() {
+    \Drupal::service('page_cache_kill_switch')->trigger();
     $sort = \Drupal::request()->request->get('sort') ?? 'A-Z';
     $reservations = $this->getAllReservations($sort);
 

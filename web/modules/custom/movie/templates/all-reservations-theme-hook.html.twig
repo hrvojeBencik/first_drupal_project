@@ -1,5 +1,5 @@
 <h1>All reservations</h1>
-<form action="" method="post">
+<form action="/all-reservations" method="post">
   <label for="sort">Sort by: </label>
   <select name="sort" id="sort" onchange="this.form.submit()" >
     <option {% if selectedSort == 'A-Z' %} selected {% endif %} value="A-Z">A-Z</option>
