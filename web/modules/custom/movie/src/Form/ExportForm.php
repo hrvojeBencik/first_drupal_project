@@ -33,7 +33,7 @@ class ExportForm extends FormBase {
   }
 
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    if ($form_state->getValue('select_format')) {
+    if ($form_state->getValue('select_format') !== 'csv' && $form_state->getValue('select_format') !== 'xml') {
       $form_state->setErrorByName('select_format', $this->t('Please choose format.'));
     }
   }
