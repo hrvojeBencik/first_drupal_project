@@ -1,0 +1,65 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+function subscription_schema() : array {
+  $schema['subscriptions'] = array(
+    'description' => 'This table contains user subscriptions for newsletter',
+    'fields' => array(
+      'id' => array(
+        'type' => 'serial',
+        'size' => 'medium',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ),
+      'first_name' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'last_name' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'email_address' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}
+
+function subscription_install() {
+  Database::setActiveConnection();
+  $connection = Database::getConnection()->schema();
+
+  $schema = subscription_schema();
+
+  foreach ($schema as $name => $table) {
+    try {
+      $connection->createTable($name, $table);
+    } catch (SchemaObjectExistsException $e) {
+      \Drupal::logger('subscription')->error($e->getMessage());
+    }
+  }
+
+  Database::setActiveConnection();
+}
+
+function subscription_uninstall() {
+  Database::setActiveConnection();
+  $connection = Database::getConnection();
+
+  $schema = subscription_schema();
+
+  foreach ($schema as $name => $table) {
+    $connection->schema()->dropTable($name);
+  }
+
+  Database::setActiveConnection();
+}
