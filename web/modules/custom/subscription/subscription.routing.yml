@@ -1,0 +1,17 @@
+subscription.content:
+  path: '/subscription'
+  defaults:
+    _controller: '\Drupal\subscription\Controller\SubscriptionController::subscription_content'
+    _title: 'Subscription'
+
+  requirements:
+    _permission: 'access content'
+
+subscription-form.content:
+  path: '/subscription-form'
+  defaults:
+    _controller: '\Drupal\subscription\Controller\SubscriptionController::subscription_form_content'
+    _title: 'Subscription Form'
+
+  requirements:
+    _permission: 'access content'

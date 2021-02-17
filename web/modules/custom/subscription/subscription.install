@@ -27,6 +27,26 @@ function subscription_schema() : array {
         'size' => 'normal',
         'not null' => TRUE,
       ),
+      'phone_number' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'country' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'city' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
+      'gender' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'not null' => TRUE,
+      ),
     ),
     'primary key' => array('id'),
   );
