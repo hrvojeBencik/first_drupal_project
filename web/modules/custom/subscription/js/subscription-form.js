@@ -47,15 +47,31 @@ jQuery(document).ready(function ($) {
       };
 
       const jsonUserData = JSON.stringify(userData);
+
+      let ajaxUrl = '/subscription';
       $.ajax({
         type: "POST",
-        url: "/subscription",
+        url: ajaxUrl,
         data: {userData: jsonUserData},
         success: function(response) {
-          console.log(response);
+          //This can only be "true" or "false", so it is enough to check only first letter
+          const info = response.substring(11,12);
+          const isValid = info === "t";
+
+          if(isValid) {
+            errorMsg.text("Subscription succeeded");
+            errorMsg.css('color', 'green');
+            errorMsg.show();
+            window.location.href = '/';
+          } else {
+            errorMsg.text("You are already subscribed");
+            errorMsg.css('color', 'red');
+            errorMsg.show();
+          }
         },
         error: function (response) {
-          console.log('error');
+          console.log("Error");
+          console.log(response);
         }
       });
     } else {
@@ -65,5 +81,3 @@ jQuery(document).ready(function ($) {
     }
   });
 });
-
-

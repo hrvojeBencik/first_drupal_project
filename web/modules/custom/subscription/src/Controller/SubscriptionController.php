@@ -2,14 +2,12 @@
 
 namespace Drupal\subscription\Controller;
 
-
 use Drupal\Core\Controller\ControllerBase;
 
 class SubscriptionController extends ControllerBase {
 
-
   public function subscription_content() {
-    $this->insert_subscription();
+    $this->insert();
 
     return [
       '#theme' => 'subscription_theme_hook',
@@ -17,12 +15,13 @@ class SubscriptionController extends ControllerBase {
   }
 
   public function subscription_form_content() {
+
     return [
       '#theme' => 'subscription_form_theme_hook',
     ];
   }
 
-  public function insert_subscription() {
+  public function insert() {
     $jsonUserData = \Drupal::request()->request->get('userData');
 
     if($jsonUserData) {
@@ -54,15 +53,19 @@ class SubscriptionController extends ControllerBase {
             $userData->country,
             $userData->city,
             $userData->gender,
-
           )
         )->execute();
-          echo json_encode(array('success' => true));
+          header('Content-Type: application/json');
+          $data = json_encode(array('success' => true));
+          echo $data;
         } else {
-          echo json_encode(array('success' => false));
+          header('Content-Type: application/json');
+          $data = json_encode(array('success' => false));
+          echo $data;
         }
       } catch (\Exception $e) {
         \Drupal::logger('confirm-subscription')->error($e->getMessage());
+        echo json_encode(array('success' => false));
       }
     }
 
