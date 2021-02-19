@@ -1,0 +1,26 @@
+{{ attach_library('subscription/subscription-form') }}
+
+    <div id="basicInfo">
+      <input id="firstName" type="text" name="firstName" placeholder="Enter first name">
+      <input id="lastName" type="text" name="lastName" placeholder="Ented last name"> <br>
+      <label for="gender">Select gender: </label>
+      <select name="gender" id="gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select> <br>
+      <input type="button" id="firstNextBtn" value="Next Step">
+    </div>
+   <div id="locationInfo">
+     <h5>Second step</h5>
+     <select id="country" name="country"></select>
+     <select name="state" id="state"></select> <br>
+     <input type="button" id="secondNextBtn" value="Next Step">
+   </div>
+    <div id="contactInfo">
+      <input id="email" type="email" name="email" placeholder="Enter email address">
+      <input id="confirmEmail" type="email" name="confirmEmail" placeholder="Confirm email address">
+      <input id="phoneNumber" type="tel" name="phoneNumber" placeholder="Enter phone number"> <br>
+      <p id="errorMessage"></p>
+      <button id="submitBtn" value="button">Submit</button>
+    </div>
+

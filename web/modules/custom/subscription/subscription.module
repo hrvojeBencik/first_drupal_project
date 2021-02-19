@@ -1,0 +1,21 @@
+<?php
+
+function subscription_theme($existing, $type, $theme, $path) {
+  return [
+    'subscription_theme_hook' => [
+      'render element' => 'children',
+    ],
+    'subscription_form_theme_hook' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+function subscription_preprocess_node__page(array &$variables) : void {
+  $variables['#attached']['library'][] = 'subscription/subscription';
+  $variables['#attached']['library'][] = 'subscription/subscription-form';
+}
+
+function subscription_preprocess_views_view_fields(&$variables) {
+  $variables['params']['parameter_name'] = $_GET['parameter_name'];
+}
